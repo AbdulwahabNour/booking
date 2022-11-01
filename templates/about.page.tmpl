@@ -1,0 +1,16 @@
+{{template "base" . }}
+
+{{define "content"}}
+<h1>About page</h1>
+<p>
+
+    {{if ne (index .StringInfo "remote_ip") ""}}
+
+    your ip is ({{index .StringInfo "remote_ip"}})
+
+    {{else}}
+    i don't know your
+    {{end}}
+
+</p>
+{{end}}

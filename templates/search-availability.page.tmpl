@@ -1,0 +1,47 @@
+{{template "base" .}}
+
+{{define "content" }}
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-md-6 search-form">
+            <h1>Search for Availability</h1>
+
+            <form action="/search-availability" method="POST" class="needs-validation" novalidate>
+                <div class="row">
+
+                    <div class="col">
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" id="swal-input1" name="start_date"
+                                placeholder="Arrival" required autocomplete="off">
+
+
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" id="swal-input2" name="end-date"
+                                placeholder="Departure" required autocomplete="off">
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <button type="submit" class="btn btn-primary mt-5">Search Availability</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+{{end}}
+
+{{define "css"}}
+<link rel="stylesheet" type="text/css" href="static/css/notie.min.css">
+{{end}}

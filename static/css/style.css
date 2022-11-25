@@ -1,0 +1,26 @@
+.my-footer {
+    margin: 0;
+    height: 1em;
+    background-color: #163b65;
+    margin-top: 1.5em;
+    padding: 2em;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.carousel {
+    height: 75vh;
+    overflow: hidden;
+}
+
+.carousel-item {
+    height: 75vh;
+}
+
+.room-image {
+    width: 50%;
+}
+
+.search-form {
+    margin: 20px auto;
+}

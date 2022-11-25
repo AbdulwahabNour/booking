@@ -1,0 +1,77 @@
+{{template "base" .}}
+
+{{define "content" }}
+<div class="container">
+
+
+    <div class="row">
+        <div class="col">
+            <img src="static/images/marjors-suite.png" class="img-fluid img-thumbnail   mx-auto d-block room-image">
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col">
+            <h1 class="text-center mt-4"> Welcome to fort smythe bed and majors</h1>
+            <h1>Your home away from home, set on .......</h1>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <button id="check-availability" class="btn btn-success">Check Availability</button>
+        </div>
+    </div>
+
+
+</div>
+{{end}}
+
+
+
+{{define "css"}}
+<link rel="stylesheet" href="static/css/datepicker-bs5.min.css">
+<link rel="stylesheet" type="text/css" href="static/css/notie.min.css">
+{{end}}
+
+
+{{define "js"}}
+<script src="static/js/datepicker-full.min.js"></script>
+<script src="static/js/sweetalert2@11.js"></script>
+<script src="static/js/notie.js"></script>
+<script src="static/js/reservation.js"></script>
+<script>
+
+    document.getElementById("check-availability").addEventListener("click", function () {
+        let form = `
+            <form action="reservation.html" method="POST" class="needs-validation "  novalidate>
+            <div calss="form-row">
+
+                        <div class="container">
+
+                                <div  class="row "  id ="date-range-modal">
+
+                                        <div class="col">
+
+                                        <input type="text" id="start" class="form-control" id="swal-input1" name="start_date" required autocomplete="off" disabled>
+                                        </div>
+s
+                                        <div class="col">
+                                        <input type="text" id="end" class="form-control" id="swal-input2" name="end-date" required autocomplete="off" disabled>
+                                        </div>
+
+                                </div>
+                        </div>
+            </div>
+
+            </form>`;
+
+
+
+
+    })
+
+
+
+</script>
+{{end}}

@@ -1,5 +1,7 @@
 package models
 
+import "github.com/AbdulwahabNour/booking/internal/forms"
+
 
 type TemplateData struct{
 	StringInfo map[string]string
@@ -10,5 +12,7 @@ type TemplateData struct{
 	Flash string
 	Warning string
 	Error string
+	Form *forms.Form
+
 }
  

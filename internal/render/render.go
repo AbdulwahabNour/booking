@@ -2,42 +2,65 @@ package render
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"path/filepath"
 
 	"github.com/AbdulwahabNour/booking/internal/config"
 	"github.com/AbdulwahabNour/booking/internal/models"
+	"github.com/justinas/nosurf"
 ) 
 
 var functions template.FuncMap
+
 var app *config.AppConfig
+
+var templatePath ="templates/"
+
+func SetTemplatePath(name string){
+    templatePath = name
+}
 
 func NewTemplate(c *config.AppConfig){ 
     app = c
 }
 
 
-func RenderTemplate(w http.ResponseWriter, tmpl string, data models.TemplateData){
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
+    td.Flash = app.Session.PopString(r.Context(),"flash")
+    td.Warning= app.Session.PopString(r.Context(), "warning")
+    td.Error = app.Session.PopString(r.Context(), "error")
+    td.CSRFToken = nosurf.Token(r)
+    return td
+ 
+} 
+
+
+func RenderTemplate(w http.ResponseWriter,r *http.Request,  tmpl string, data models.TemplateData)error{
  
     t, ok := app.TemplateCache[tmpl]
     if !ok {
-        log.Fatalln("template not found")
+ 
+        return errors.New("can't get template from cache")
     }
-    buf := new(bytes.Buffer)
 
+    buf := new(bytes.Buffer) 
+ 
     err := t.Execute(buf, data)
+
     if err != nil{
-        fmt.Println("===============================================")
-        fmt.Println(err)
-        fmt.Println("===============================================")
+        return err
     }
-    buf.WriteTo(w)
+    _, err = buf.WriteTo(w)
+ 
+    if err != nil{
+        return err
+    }
    
     
- 
+    return nil
 } 
 
 
@@ -47,7 +70,7 @@ func CreateTemplateCache()(map[string]*template.Template, error){
     myCache := make(map[string]*template.Template)
   
     
-    pages, err := filepath.Glob("../../templates/*.page.tmpl")
+    pages, err := filepath.Glob(fmt.Sprintf("%s*.page.tmpl",templatePath))
 
     if err != nil{
        return myCache, err 
@@ -57,7 +80,7 @@ func CreateTemplateCache()(map[string]*template.Template, error){
  
         name := filepath.Base(page)
         
-        ts, err  := template.New(name).Funcs(functions).ParseFiles(page,"../../templates/base.layout.tmpl")
+        ts, err  := template.New(name).Funcs(functions).ParseFiles(page,fmt.Sprintf("%sbase.layout.tmpl",templatePath))
        
         
         

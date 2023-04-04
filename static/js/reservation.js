@@ -116,7 +116,12 @@ function prompt() {
             msg = "",
             title = "",
         } = e;
-
+// swal.fire returns oject
+//     {"isConfirmed": true,
+//     "isDenied": false,
+//     "isDismissed": false,
+//     "value": } 
+// const { value: result } means put the value of "value" that returned from Swal.fire in result 
         const { value: result } = await Swal.fire({
             title: title,
             html: msg,

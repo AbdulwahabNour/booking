@@ -28,9 +28,15 @@ func routes(app *config.AppConfig) http.Handler{
 
 
     r.HandleFunc("/make-reservation", handlers.Repo.Reservation).Methods("GET")
+    r.HandleFunc("/make-reservation", handlers.Repo.PostReservation).Methods("POST")
+
+
+    r.HandleFunc("/reservation-summary", handlers.Repo.ReservationSummary)
+
+    
     r.HandleFunc("/contact", handlers.Repo.Contact).Methods("GET")
    
-    r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("../../static"))))
+    r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
     
     return r
 }

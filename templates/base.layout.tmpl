@@ -10,7 +10,8 @@
     <!-- CSS only -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"> -->
-    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/notie.min.css">
     {{block "css" .}}
 
     {{end}}
@@ -72,10 +73,12 @@
 
     <script src="static/js/popper.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
+    <script src="/static/js/notie.js"></script>
+    <script src="static/js/js.js"></script>
     {{block "js" .}}
 
     {{end}}
-    <script src="static/js/js.js"></script>
+
 </body>
 
 </html>

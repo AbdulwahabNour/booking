@@ -4,7 +4,7 @@ import (
 	"html/template"
 	"log"
 
-	"github.com/gorilla/sessions"
+	"github.com/alexedwards/scs/v2"
 )
 
 var App AppConfig
@@ -15,8 +15,9 @@ type AppConfig struct{
      UseCache bool 
      TemplateCache map[string]*template.Template
      InfoLog *log.Logger
+     ErrorLog *log.Logger
      InProduction bool
-     Session *sessions.CookieStore
+     Session *scs.SessionManager
      
    
 } 

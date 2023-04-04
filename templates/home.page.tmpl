@@ -66,5 +66,25 @@
             <a href="/search-availability" class=" btn btn-success"> Make Reservation Now</a>
         </div>
     </div>
+    
 </div>
+
+{{end}}
+
+ 
+{{define "js"}}
+
+<script>
+
+    {{with .Error }}
+    notify("{{.}}", "error")
+    {{end}}
+
+
+    {{with .Flash }}
+    notify("{{.}}", "success")
+    {{end}}
+
+</script>
+
 {{end}}

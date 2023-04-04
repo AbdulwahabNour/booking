@@ -1,0 +1,3 @@
+drop_foreign_key("room_restrictions", "room_restrictions_reservation_id_foreign_reservation_id", {"if_exists": true})
+drop_foreign_key("room_restrictions", "room_restrictions_reservation_id_foreign_restriction_id", {"if_exists": true})
+drop_foreign_key("room_restrictions", "room_restrictions_reservation_id_foreign_room_id", {"if_exists": true})

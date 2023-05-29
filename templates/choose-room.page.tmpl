@@ -1,0 +1,56 @@
+{{template "base" .}}
+
+
+{{define "content"}}
+
+<div class="container">
+    <div class="row">
+        <h1>Choose Room</h1>
+        {{$rooms := index .Data "rooms"}}
+        {{$links := index .Data "links"}}
+        {{$from := index .Data "From"}}
+        {{$to := index .Data "To"}}
+        {{$last := index .Data "pagesNumber"}}
+
+
+
+
+
+
+        {{range $rooms}}
+
+
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <a href="/make-reservation/{{$from}}/{{$to}}/{{.ID}}">{{.RoomName}}</a>
+                <p class="card-text">{{.RoomName}} {{.ID}}</p>
+            </div>
+        </div>
+
+
+
+        {{end}}
+
+        <div class="pagination">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+
+                    <li class="page-item disabled">
+                    <li class="page-item"><a class="page-link" href="/choose-room/{{$from}}/{{$to}}/1">1</a>
+                    </li>
+                    {{range $links}}
+                    <li class="page-item"><a class="page-link" href="/choose-room/{{$from}}/{{$to}}/{{.}}">{{.}}</a>
+                    </li>
+                    {{end}}
+
+                    <li class="page-item"><a class="page-link"
+                            href="/choose-room/{{$from}}/{{$to}}/{{$last}}">{{$last}}</a>
+
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+{{end}}

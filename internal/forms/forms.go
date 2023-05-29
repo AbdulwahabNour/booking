@@ -12,21 +12,24 @@ import (
 type Form struct{
     url.Values
     Errors errors
+   
 }
 
 func New(data url.Values) *Form{
-
+ 
     return &Form{
         data,
         make(errors),
+       
     }
 }
 // func(f *Form)TrimValues()
 func (f *Form)Require(fields ... string)   {
-  
+   
     for _, field := range fields{
-
+      
         input :=  f.Values.Get(field) 
+  
         if input == ""{
             f.Errors.Add(field, EmptyFormErr)
         
@@ -60,3 +63,4 @@ func(f *Form)TrimValues(){
         f.Values[key] = val
     }
 }
+

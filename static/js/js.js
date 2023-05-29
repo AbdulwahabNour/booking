@@ -12,6 +12,18 @@ function notifyModal(title, msg, icon, confirmButtonText) {
         title: title,
         icon: icon,
         html: msg,
+        time: 5,
         confirmButtonText: confirmButtonText,
     })
+}
+
+function isValidDate(dateString) {
+    var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    return dateRegex.test(dateString) && !isNaN(Date.parse(dateString));
+}
+
+function redirectAfterDelay(url, delay) {
+    setTimeout(function () {
+        window.location.href = url;
+    }, delay);
 }

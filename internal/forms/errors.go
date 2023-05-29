@@ -3,6 +3,8 @@ const(
         EmptyFormErr  = "this field cannot be empty"
         LengthFormErr = "this field must be more than"
         EmailFormErr = "invalid email address"
+        StartDateFormErr = "please enter valid start date"
+        EndDateFormErr = "please enter valid end date"
 )
 
 

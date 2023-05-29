@@ -28,7 +28,7 @@ func TestAddDefaultData(t *testing.T){
 
 
 
-func TestRenderTemplate(t *testing.T){
+func TestTemplate(t *testing.T){
   var td models.TemplateData
     SetTemplatePath("../../templates/")
     cach, err := CreateTemplateCache()
@@ -38,7 +38,7 @@ func TestRenderTemplate(t *testing.T){
     }
     w := httptest.NewRecorder()
     r := httptest.NewRequest(http.MethodGet, "/", nil)
-    err = RenderTemplate(w , r,"home.page.tmpl",td)
+    err = Template(w , r,"home.page.tmpl",td)
     if err != nil{
        t.Errorf("RenderTemplate returned an error: %v", err)
     }
@@ -64,9 +64,9 @@ func getSession()(*http.Request, error){
     
      return req, nil
 }
-func TestNewTemplate(t *testing.T){
+func TestSetConfigToRender(t *testing.T){
    
-   NewTemplate(app)
+   SetConfigToRender(app)
 }
 
 

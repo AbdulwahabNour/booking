@@ -24,3 +24,24 @@
 .search-form {
     margin: 20px auto;
 }
+
+.reservation-date {
+    margin: 30px 0;
+}
+
+.make-reservation-body .form-div {
+    border-radius: 20px;
+    max-width: 458px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+
+.pagination nav {
+    margin: 20px auto;
+}
+
+.room .card {
+    margin: 19px 0;
+}

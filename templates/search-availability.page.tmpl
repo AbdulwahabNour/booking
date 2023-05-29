@@ -9,7 +9,7 @@
             <h1>Search for Availability</h1>
 
             <form action="/search-availability" method="POST" class="needs-validation" novalidate>
-                <div class="row">
+                <div id="date-range-modal" class="row">
 
                     <div class="col">
                         <div class="form-group">
@@ -17,24 +17,46 @@
                             <input type="text" class="form-control" id="swal-input1" name="start_date"
                                 placeholder="Arrival" required autocomplete="off">
 
-
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="form-group">
 
-                            <input type="text" class="form-control" id="swal-input2" name="end-date"
+                            <input type="text" class="form-control" id="swal-input2" name="end_date"
                                 placeholder="Departure" required autocomplete="off">
 
                         </div>
                     </div>
 
                 </div>
+                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
 
+                <div class="row error-date">
 
+                    <div class="row">
+
+                        {{with .Form.Errors.Get "start_date"}}
+                        <label class="text-danger">{{.}}</label>
+                        {{end}}
+                    </div>
+                    <div class="row">
+                        {{with .Form.Errors.Get "end_date"}}
+                        <label class="text-danger">{{.}}</label>
+                        {{end}}
+                    </div>
+
+                </div>
+                <div class="search-room">
+                    {{with .Form.Errors.Get "search_room"}}
+                    <label class="text-danger">{{.}}</label>
+                    {{end}}
+
+                </div>
                 <button type="submit" class="btn btn-primary mt-5">Search Availability</button>
             </form>
+
+
         </div>
 
     </div>
@@ -43,5 +65,17 @@
 {{end}}
 
 {{define "css"}}
+<link rel="stylesheet" href="static/css/datepicker-bs5.min.css">
 <link rel="stylesheet" type="text/css" href="static/css/notie.min.css">
 {{end}}
+
+{{define "js"}}
+<script src="static/js/datepicker-full.min.js"></script>
+{{end}}
+
+<script>
+    const elem = document.getElementById('date-range-modal');
+    const rangepicker = new DateRangePicker(elem, { format: "yyyy-mm-dd", orientation: "down auto", minDate: new Date(), autohide: true });
+
+
+</script>

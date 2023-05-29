@@ -60,7 +60,7 @@
                                         <input type="text" id="end" class="form-control" id="swal-input2" name="end-date" required autocomplete="off" disabled>
                                         </div>
 
-                                </div>
+                                </div>  
                         </div>
             </div>
 
@@ -75,8 +75,7 @@
                 let formData = new FormData(form)
                 formData.append("csrf_token", "{{.CSRFToken}}")
 
-                console.log("called")
-                console.log(formData)
+
                 fetch("/search-availability-json", { method: "post", body: formData })
                     .then(r => r.json())
                     .then(data => {
@@ -85,7 +84,13 @@
             },
             willOpen: () => {
                 const elem = document.getElementById('date-range-modal');
-                const rangepicker = new DateRangePicker(elem, { format: "yyyy-mm-dd", orientation: "top auto" });
+                const rangepicker = new DateRangePicker(elem, { format: "yyyy-mm-dd", orientation: "top auto", minDate: new Date(), autohide: true });
+
+
+
+
+
+
             },
             didOpen: () => {
                 document.getElementById("start").removeAttribute('disabled')

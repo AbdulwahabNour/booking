@@ -13,8 +13,12 @@ import (
 	"github.com/AbdulwahabNour/booking/internal/helper"
 	"github.com/AbdulwahabNour/booking/internal/models"
 	"github.com/AbdulwahabNour/booking/internal/render"
+	"github.com/AbdulwahabNour/booking/internal/repository/dbrepo"
 	"github.com/alexedwards/scs/v2"
+	"github.com/jmoiron/sqlx"
 	"github.com/justinas/nosurf"
+	_ "github.com/lib/pq"
+	"github.com/microcosm-cc/bluemonday"
 )
 
 var app config.AppConfig
@@ -24,14 +28,21 @@ var errorlog *log.Logger
 
 func main(){
   
-    err := run()
+    db,err := run()
+
+
     if err != nil{
         log.Fatalln(err)
     }
+    defer db.Close()
+    
     r := routes(&app)
    
-    fmt.Println("Server runing on port:8081")
-    http.ListenAndServe(":8081",nosurf.New(app.Session.LoadAndSave(r)))
+    fmt.Println("Server runing on port:8080")
+    err = http.ListenAndServe(":8080",nosurf.New(app.Session.LoadAndSave(r)))
+    if err != nil{
+        log.Fatalln(err)
+    }
 } 
 
 
@@ -46,15 +57,21 @@ func declareSession( * scs.SessionManager){
     session.Cookie.Secure = false
 }
 
-func run() error{
+func run() (*sqlx.DB, error){
    
     gob.Register(models.Reservation{})
+    gob.Register(models.Restriction{})
+    gob.Register(models.Room{})
+    gob.Register(models.User{})
+
     var err error
     app.InProduction = false
     infolog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime) 
     app.InfoLog = infolog
     errorlog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
     app.ErrorLog = errorlog
+    app.Bluemonday =  bluemonday.NewPolicy()
+ 
 
     declareSession(session)
 
@@ -62,19 +79,27 @@ func run() error{
     
     app.TemplateCache, err = render.CreateTemplateCache()
     if err != nil{ 
-       return err
+       return nil,err
     }
-    
+
+    log.Println("Connecting to database......")
  
-  
-    render.NewTemplate(&app)
+    //db, err := driver.ConnectSql()
+    dbx, err := sqlx.Connect("postgres", "host=localhost sslmode=disable port=5432 dbname=bookings user=postgres password= ")
    
- 
-    handlerRepo := handlers.NewRepo(&app)
+    if err != nil{
+        log.Fatalf("can't connect to database err %s", err.Error())
+    }
+
+    render.SetConfigToRender(&app)
+   
+    postgresRepo := dbrepo.NewPostgressRepo(dbx, &app)    
+    
+    handlerRepo := handlers.NewRepo(postgresRepo ,&app)
     
     handlers.NewHandlers(handlerRepo)
     helper.NewHelper(&app)
 
-    return nil
+    return dbx, nil
 
 }

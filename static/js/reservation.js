@@ -1,11 +1,11 @@
 'use sttric'
 
- 
+
 
 let attention = prompt();
 
 (() => {
- 
+
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     const forms = document.querySelectorAll('.needs-validation')
 
@@ -27,7 +27,7 @@ let attention = prompt();
     })
 })()
 
- 
+
 
 
 function notify(msg, msgType) {
@@ -116,12 +116,12 @@ function prompt() {
             msg = "",
             title = "",
         } = e;
-// swal.fire returns oject
-//     {"isConfirmed": true,
-//     "isDenied": false,
-//     "isDismissed": false,
-//     "value": } 
-// const { value: result } means put the value of "value" that returned from Swal.fire in result 
+        // swal.fire returns oject
+        //     {"isConfirmed": true,
+        //     "isDenied": false,
+        //     "isDismissed": false,
+        //     "value": } 
+        // const { value: result } means put the value of "value" that returned from Swal.fire in result 
         const { value: result } = await Swal.fire({
             title: title,
             html: msg,
@@ -129,38 +129,38 @@ function prompt() {
             backdrop: false,
             showCancelButton: true,
             willOpen: () => {
-                if(e.willOpen !== undefined){
+                if (e.willOpen !== undefined) {
                     e.willOpen()
                 }
-                
+
             },
             preConfirm: () => {
-                if(e.preConfirm !== undefined){
-                    return  e.preConfirm()
+                if (e.preConfirm !== undefined) {
+                    return e.preConfirm()
                 }
-                
+
             },
             didOpen: () => {
-                if(e.didOpen !== undefined){
+                if (e.didOpen !== undefined) {
                     e.didOpen()
                 }
             }
 
-            
-        }) 
 
-        if(result){
-       
-            if(result.dismiss !== Swal.DismissReason.cancel){
-               if (result.value !== ""){
-                if(e.callback !== undefined){
-                    e.callback(result)
+        })
+
+        if (result) {
+
+            if (result.dismiss !== Swal.DismissReason.cancel) {
+                if (result.value !== "") {
+                    if (e.callback !== undefined) {
+                        e.callback(result)
+                    }
+
                 }
-                 
-               }
-            } 
-        } 
-        
+            }
+        }
+
 
 
 
@@ -174,4 +174,3 @@ function prompt() {
     }
 }
 
- 

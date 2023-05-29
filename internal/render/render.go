@@ -23,7 +23,7 @@ func SetTemplatePath(name string){
     templatePath = name
 }
 
-func NewTemplate(c *config.AppConfig){ 
+func SetConfigToRender(c *config.AppConfig){ 
     app = c
 }
 
@@ -38,9 +38,18 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 } 
 
 
-func RenderTemplate(w http.ResponseWriter,r *http.Request,  tmpl string, data models.TemplateData)error{
+func Template(w http.ResponseWriter,r *http.Request,  tmpl string, data models.TemplateData)error{
+   var tc map[string]*template.Template
  
-    t, ok := app.TemplateCache[tmpl]
+    if app.UseCache{
+        tc, _ = CreateTemplateCache()
+        }else{
+        tc = app.TemplateCache 
+    }
+    
+    t, ok := tc[tmpl]
+
+
     if !ok {
  
         return errors.New("can't get template from cache")

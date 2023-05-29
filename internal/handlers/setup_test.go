@@ -10,15 +10,19 @@ import (
 	"github.com/AbdulwahabNour/booking/internal/config"
 	"github.com/AbdulwahabNour/booking/internal/models"
 	"github.com/AbdulwahabNour/booking/internal/render"
+	"github.com/AbdulwahabNour/booking/internal/repository/dbrepo"
 	"github.com/alexedwards/scs"
 	"github.com/gorilla/mux"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 )
 var app config.AppConfig
 var session *scs.SessionManager
 var infolog *log.Logger
 var errorlog *log.Logger
 
-func getRoutes() http.Handler{
+func getRoutes() (*sqlx.DB, http.Handler){
+
    gob.Register(models.Reservation{})
    var err error
    session = scs.New()
@@ -40,8 +44,15 @@ func getRoutes() http.Handler{
     if err != nil{
          log.Fatal("cannot create template cache")
     }
-    render.NewTemplate(&app)
-    handlerRepo := NewRepo(&app)
+    render.SetConfigToRender(&app)
+    dbx, err := sqlx.Connect("postgres", "host=localhost sslmode=disable port=5432 dbname=bookings user=postgres password= ")
+    if err != nil{
+        log.Fatalf("can't connect to database err %s", err.Error())
+    }
+    postgresRepo := dbrepo.NewPostgressRepo(dbx, &app)    
+
+
+    handlerRepo := NewRepo(postgresRepo, &app)
     //set repo in handler page
     NewHandlers(handlerRepo)
 
@@ -69,7 +80,7 @@ func getRoutes() http.Handler{
     r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
  
     
-    return app.Session.LoadAndSave(r)
+    return dbx, app.Session.LoadAndSave(r)
     
 
  

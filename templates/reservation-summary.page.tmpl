@@ -2,6 +2,9 @@
 
 {{define "content"}}
 {{$res := index .Data "reservation"}}
+{{$room := index .Data "room"}}
+{{$from := index .StringMap "startDate"}}
+{{$to := index .StringMap "endDate"}}
 <div class="container">
     <div class="row">
         <div class="col">
@@ -10,17 +13,34 @@
             <table class="table table-striped">
                 <thead></thead>
                 <tbody>
+
+
                     <tr>
                         <td>Name :</td>
-                        <td>{{$res.FirstName}}</td>
+                        <td>{{$res.FirstName}} {{$res.LastName}}</td>
                     </tr>
+
+                    <tr>
+                        <td>Room name :</td>
+                        <td>{{$room.RoomName}}</td>
+                    </tr>
+
+
                     <tr>
                         <td>Arrival :</td>
-                        <td></td>
+                        <td>{{$from}}</td>
                     </tr>
                     <tr>
                         <td>Departure :</td>
-                        <td></td>
+                        <td>{{$to}}</td>
+                    </tr>
+                    <tr>
+                        <td>Email :</td>
+                        <td>{{$res.Email}}</td>
+                    </tr>
+                    <tr>
+                        <td>Phone :</td>
+                        <td>{{$res.Phone}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/alexedwards/scs/v2"
+	"github.com/microcosm-cc/bluemonday"
 )
 
 var App AppConfig
@@ -18,6 +19,7 @@ type AppConfig struct{
      ErrorLog *log.Logger
      InProduction bool
      Session *scs.SessionManager
-     
-   
+     Bluemonday *bluemonday.Policy
+
+ 
 } 

@@ -4,7 +4,7 @@ import "github.com/AbdulwahabNour/booking/internal/forms"
 
 
 type TemplateData struct{
-	StringInfo map[string]string
+	StringMap map[string]string
 	IntMap map[string]int
 	FloatMap map[string]float32
 	Data     map[string]interface{}

@@ -50,7 +50,9 @@ var testhand=[]struct{
 }
 
 func TestHandler(t *testing.T){
- h := getRoutes()
+ db, h := getRoutes()
+ defer db.Close()
+ 
  ts := httptest.NewTLSServer(h)
  
  defer ts.Close()

@@ -27,11 +27,20 @@ func routes(app *config.AppConfig) http.Handler{
     r.HandleFunc("/search-availability-json", handlers.Repo.AvailabilityJson).Methods("POST")
 
 
-    r.HandleFunc("/make-reservation", handlers.Repo.Reservation).Methods("GET")
-    r.HandleFunc("/make-reservation", handlers.Repo.PostReservation).Methods("POST")
+    r.HandleFunc("/make-reservation/{from}/{to}/{roomId}", handlers.Repo.Reservation).Methods("GET")
+    r.HandleFunc("/make-reservation/{from}/{to}/{roomId}", handlers.Repo.PostReservation).Methods("POST")
 
 
+
+    r.HandleFunc("/choose-room/{from}/{to}", handlers.Repo.ChooseRoom).Methods("GET")
+    r.HandleFunc("/choose-room/{from}/{to}/{page}", handlers.Repo.ChooseRoom).Methods("GET")
+
+
+    r.HandleFunc("/rooms", handlers.Repo.Getrooms).Methods("GET")
+    r.HandleFunc("/rooms/{page}", handlers.Repo.Getrooms).Methods("GET")
+    
     r.HandleFunc("/reservation-summary", handlers.Repo.ReservationSummary)
+
 
     
     r.HandleFunc("/contact", handlers.Repo.Contact).Methods("GET")
@@ -39,4 +48,4 @@ func routes(app *config.AppConfig) http.Handler{
     r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
     
     return r
-}
+} 
